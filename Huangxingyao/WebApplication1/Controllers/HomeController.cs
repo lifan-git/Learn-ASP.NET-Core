@@ -5,12 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MvcMovie.Models;
+using WebApplication1.Models;
 
-namespace MvcMovie.Controllers
+namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        [ViewData]
+        public string Title { get; set; }
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -30,7 +33,40 @@ namespace MvcMovie.Controllers
 
         public IActionResult About()
         {
+            Title = "About Us";
             ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            var viewModel = new Address()
+            {
+                Name = "Microsoft",
+                Street = "One Microsoft Way",
+                City = "Redmond",
+                State = "WA",
+                PostalCode = "98052-6399"
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult SomeAction()
+        {
+            ViewBag.Greeting = "Hello";
+            ViewBag.Address = new Address()
+            {
+                Name = "Steve",
+                Street = "123 Main St",
+                City = "Hudson",
+                State = "OH",
+                PostalCode = "44236"
+            };
+
             return View();
         }
 
