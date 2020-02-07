@@ -163,3 +163,4 @@ C:\Users\Administrator\source\repos\Learn-ASP.NET-Core\Chenjing\MvcMovie\obj\Deb
 C:\Users\Administrator\source\repos\Learn-ASP.NET-Core\Chenjing\MvcMovie\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Details.cshtml.g.cs
 C:\Users\Administrator\source\repos\Learn-ASP.NET-Core\Chenjing\MvcMovie\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Edit.cshtml.g.cs
 C:\Users\Administrator\source\repos\Learn-ASP.NET-Core\Chenjing\MvcMovie\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Index.cshtml.g.cs
+C:\Users\Administrator\source\repos\Learn-ASP.NET-Core\Chenjing\MvcMovie\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Index2.cshtml.g.cs

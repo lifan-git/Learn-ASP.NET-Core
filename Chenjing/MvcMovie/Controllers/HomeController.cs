@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcMovie.Models;
@@ -20,6 +21,8 @@ namespace MvcMovie.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("test", "tes");
+            string str = HttpContext.Session.GetString("test");
             return View();
         }
 

@@ -26,6 +26,16 @@ namespace MvcMovie
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //会话后备存储
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                //设置超时
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                //是否需要Cookie
+                options.Cookie.IsEssential = true;
+            });
             services.AddDbContext<MvcMovieContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
         }
@@ -45,9 +55,9 @@ namespace MvcMovie
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

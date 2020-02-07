@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,75 @@ namespace MvcMovie
             _context = context;
         }
 
-        // GET: Movies
-        public async Task<IActionResult> Index()
+        //// GET: Movies
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Movie.ToListAsync());
+        //}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public string Index(string searchString, bool usePost)
         {
-            return View(await _context.Movie.ToListAsync());
+            return "当前使用的是Post";
         }
+
+
+        ///// <summary>
+        ///// 搜索
+        ///// </summary>
+        ///// <returns></returns>
+        ///// <param name="searchString">搜索内容</param>
+        //public async Task<IActionResult> Index(string searchString)
+        //{
+        //    var movies = from m in _context.Movie
+        //                 select m;
+        //    if (!string.IsNullOrWhiteSpace(searchString)) 
+        //    {
+        //        movies = movies.Where(o => 
+        //        o.Title.Contains(searchString)||
+        //        o.Genre.Contains(searchString));
+        //    }
+        //    return View(await movies.ToListAsync());
+        //}
+
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="movieGenre"></param>
+        /// <param name="searchString">搜索内容</param>
+        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        {
+            var genreQuery = from m in _context.Movie
+                             orderby m.Genre
+                             select m.Genre;
+            var movies = from m in _context.Movie
+                         select m;
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                movies = movies.Where(o =>
+                o.Title.Contains(searchString));
+                //||
+                //o.Genre.Contains(searchString)) ;
+            }
+
+            if (!string.IsNullOrWhiteSpace(movieGenre)) 
+            {
+                movies = movies.Where(o => o.Genre == movieGenre);
+            }
+
+            var movieGenreVM = new MovieGenreViewModel()
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Movies = await movies.ToListAsync(),
+            };
+            return View(movieGenreVM);
+        }
+
 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -54,7 +119,7 @@ namespace MvcMovie
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +151,7 @@ namespace MvcMovie
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (id != movie.Id)
             {
