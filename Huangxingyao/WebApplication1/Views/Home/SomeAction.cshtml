@@ -1,0 +1,14 @@
+﻿@model WebApplication1.Models.Address
+
+@{
+    // 因为Address不是字符串，所以需要强制转换。
+    //var address = ViewData["Address"] as Address;
+}
+
+@ViewBag.Greeting World!
+
+<address>
+    @ViewBag.address.Name<br>
+    @ViewBag.address.Street<br>
+    @ViewBag.address.City, @ViewBag.address.State @ViewBag.address.PostalCode
+</address>

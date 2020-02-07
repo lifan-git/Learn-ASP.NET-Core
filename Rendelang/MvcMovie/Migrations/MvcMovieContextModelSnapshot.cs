@@ -27,7 +27,10 @@ namespace MvcMovie.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Rating")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime(6)");
